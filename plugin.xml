@@ -18,7 +18,7 @@
 
     <platform name="ios">
 
-        <source-file src="src/ios/CustomFileDownloader.swift" />
+        <source-file src="src/ios/CustomFileDownloader.m" />
 
         <config-file target="config.xml" parent="/*">
             <feature name="CustomFileDownloader">
