@@ -4,21 +4,22 @@ var CustomFileDownloader = {
 
     download: function (url, success, error) {
 
-        exec(
-            function (filePath) {
-                if (success) {
-                    success(filePath);
-                }
-            },
-            function (errorMessage) {
-                if (error) {
-                    error(errorMessage);
-                }
-            },
-            'CustomFileDownloader',
-            'download',
-            [url]
-        );
+        try {
+
+            exec(
+                success,
+                error,
+                'CustomFileDownloader',
+                'download',
+                [url]
+            );
+
+        } catch (e) {
+
+            if (error) {
+                error("EXEC ERROR: " + e.message);
+            }
+        }
     }
 
 };
