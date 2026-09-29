@@ -5,7 +5,8 @@
 
 - (void)download:(CDVInvokedUrlCommand *)command
 {
-    NSString *urlString = [command.arguments firstObject];
+    NSString *urlString = [command.arguments objectAtIndex:0];
+    NSString *customFileName = [command.arguments objectAtIndex:1];
 
     if (![urlString isKindOfClass:[NSString class]] || urlString.length == 0) {
         CDVPluginResult *result =
@@ -15,6 +16,12 @@
         [self.commandDelegate sendPluginResult:result
                                     callbackId:command.callbackId];
         return;
+    }
+
+    if (![customFileName isKindOfClass:[NSString class]] ||
+        customFileName.length == 0) {
+
+        customFileName = @"download.pdf";
     }
 
     NSURL *url = [NSURL URLWithString:urlString];
@@ -72,18 +79,13 @@
             return;
         }
 
-        NSString *fileName = response.suggestedFilename;
-
-        if (fileName.length == 0) {
-            fileName = @"download.pdf";
-        }
-
-        if (![fileName.pathExtension.lowercaseString isEqualToString:@"pdf"]) {
-            fileName = [fileName stringByAppendingPathExtension:@"pdf"];
+        if (![customFileName.pathExtension.lowercaseString isEqualToString:@"pdf"]) {
+            customFileName =
+                [customFileName stringByAppendingPathExtension:@"pdf"];
         }
 
         NSURL *destinationURL =
-            [documentsDirectory URLByAppendingPathComponent:fileName];
+            [documentsDirectory URLByAppendingPathComponent:customFileName];
 
         NSError *fileError = nil;
 
