@@ -1,4 +1,3 @@
-```objc
 #import <Cordova/Cordova.h>
 
 @class UIDocumentInteractionController;
