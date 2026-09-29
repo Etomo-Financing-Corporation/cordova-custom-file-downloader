@@ -1,10 +1,8 @@
 #import <Cordova/Cordova.h>
 
-@class UIDocumentInteractionController;
-
 @interface CustomFileDownloader : CDVPlugin
 
-@property (nonatomic, strong) UIDocumentInteractionController *documentController;
+@property (nonatomic, strong) NSURL *previewFileURL;
 
 - (void)download:(CDVInvokedUrlCommand *)command;
 - (void)open:(CDVInvokedUrlCommand *)command;
