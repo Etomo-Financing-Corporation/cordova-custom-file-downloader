@@ -167,20 +167,7 @@
 
         self.documentController.delegate = self;
 
-        BOOL opened =
-            [self.documentController presentPreviewAnimated:YES];
-
-        if (!opened) {
-
-            CDVPluginResult *result =
-                [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                  messageAsString:@"Unable to open PDF viewer"];
-
-            [self.commandDelegate sendPluginResult:result
-                                        callbackId:command.callbackId];
-
-            return;
-        }
+        [self.documentController presentPreviewAnimated:YES];
 
         CDVPluginResult *result =
             [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
@@ -195,6 +182,12 @@
     (UIDocumentInteractionController *)controller
 {
     return self.viewController;
+}
+
+- (void)documentInteractionControllerDidEndPreview:
+    (UIDocumentInteractionController *)controller
+{
+    self.documentController = nil;
 }
 
 @end
