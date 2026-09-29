@@ -8,6 +8,8 @@
 
 @implementation CustomFileDownloader
 
+CDV_EXPORT_METHOD(download:)
+
 - (void)download:(CDVInvokedUrlCommand *)command
 {
     NSString *urlString = [command.arguments firstObject];
