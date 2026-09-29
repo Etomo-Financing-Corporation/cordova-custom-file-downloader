@@ -2,7 +2,7 @@
 
 @implementation CustomFileDownloader
 
-CDV_EXPORT_METHOD(download:(CDVInvokedUrlCommand *)command)
+- (void)download:(CDVInvokedUrlCommand *)command
 {
     CDVPluginResult *result =
         [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
