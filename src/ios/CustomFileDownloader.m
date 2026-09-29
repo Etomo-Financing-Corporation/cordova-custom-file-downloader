@@ -1,4 +1,3 @@
-
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <Cordova/CDV.h>
@@ -86,7 +85,9 @@
         NSError *fileError = nil;
 
         if ([fileManager fileExistsAtPath:destinationURL.path]) {
-            [fileManager removeItemAtURL:destinationURL error:&fileError];
+
+            [fileManager removeItemAtURL:destinationURL
+                                    error:&fileError];
 
             if (fileError) {
 
