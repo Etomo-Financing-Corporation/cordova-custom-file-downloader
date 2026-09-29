@@ -12,17 +12,22 @@
         <engine name="cordova" version=">=10.0.0" />
     </engines>
 
-    <platform name="ios">
+<platform name="ios">
 
-        <source-file src="src/ios/CustomFileDownloader.swift" />
+    <js-module src="src/www/CustomFileDownloader.js"
+               name="CustomFileDownloader">
+        <clobbers target="cordova.plugins.CustomFileDownloader" />
+    </js-module>
 
-        <config-file target="config.xml" parent="/*">
-            <feature name="CustomFileDownloader">
-                <param name="ios-package"
-                       value="CustomFileDownloader" />
-            </feature>
-        </config-file>
+    <source-file src="src/ios/CustomFileDownloader.swift" />
 
-    </platform>
+    <config-file target="config.xml" parent="/*">
+        <feature name="CustomFileDownloader">
+            <param name="ios-package"
+                   value="CustomFileDownloader" />
+        </feature>
+    </config-file>
+
+</platform>
 
 </plugin>
