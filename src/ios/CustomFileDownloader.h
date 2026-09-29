@@ -1,3 +1,4 @@
+```objc
 #import <Cordova/Cordova.h>
 
 @class UIDocumentInteractionController;
@@ -10,3 +11,4 @@
 - (void)open:(CDVInvokedUrlCommand *)command;
 
 @end
+```
