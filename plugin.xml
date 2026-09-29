@@ -18,15 +18,17 @@
 
     <platform name="ios">
 
-    <header-file src="src/ios/CustomFileDownloader.h" />
+        <header-file src="src/ios/CustomFileDownloader.h" />
 
-    <source-file src="src/ios/CustomFileDownloader.m" />
+        <source-file src="src/ios/CustomFileDownloader.m" />
 
-    <config-file target="config.xml" parent="/*">
-        <feature name="CustomFileDownloader">
-            <param name="ios-package" value="CustomFileDownloader" />
-        </feature>
-    </config-file>
+        <config-file target="config.xml" parent="/*">
+            <feature name="CustomFileDownloader">
+                <param name="ios-package"
+                       value="CustomFileDownloader" />
+            </feature>
+        </config-file>
 
-</platform>
+    </platform>
+
 </plugin>
