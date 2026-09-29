@@ -164,13 +164,13 @@
             return;
         }
 
-        UIDocumentInteractionController *documentController =
-            [UIDocumentInteractionController interactionControllerWithURL:fileURL];
+        self.documentController =
+    [UIDocumentInteractionController interactionControllerWithURL:fileURL];
 
-        documentController.delegate = self;
+self.documentController.delegate = self;
 
-        BOOL opened =
-            [documentController presentPreviewAnimated:YES];
+BOOL opened =
+    [self.documentController presentPreviewAnimated:YES];
 
         if (!opened) {
             CDVPluginResult *result =
