@@ -1,33 +1,32 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin id="cordova-custom-file-downloader"
         version="1.0.0"
         xmlns="http://apache.org/cordova/ns/plugins/1.0">
 
     <name>CustomFileDownloader</name>
-    <description>Custom file downloader for OutSystems Developer Cloud</description>
+    <description>Custom PDF file downloader for OutSystems Developer Cloud</description>
     <license>MIT</license>
 
     <engines>
         <engine name="cordova" version=">=10.0.0" />
     </engines>
 
-<platform name="ios">
-
     <js-module src="src/www/CustomFileDownloader.js"
                name="CustomFileDownloader">
         <clobbers target="cordova.plugins.CustomFileDownloader" />
     </js-module>
 
-    <source-file src="src/ios/CustomFileDownloader.swift" />
+    <platform name="ios">
 
-    <config-file target="config.xml" parent="/*">
-        <feature name="CustomFileDownloader">
-            <param name="ios-package"
-                   value="CustomFileDownloader" />
-        </feature>
-    </config-file>
+        <source-file src="src/ios/CustomFileDownloader.swift" />
 
-</platform>
+        <config-file target="config.xml" parent="/*">
+            <feature name="CustomFileDownloader">
+                <param name="ios-package"
+                       value="CustomFileDownloader" />
+            </feature>
+        </config-file>
+
+    </platform>
 
 </plugin>
