@@ -2,7 +2,7 @@ var exec = require('cordova/exec');
 
 var CustomFileDownloader = {
 
-    download: function (url, success, error) {
+    download: function (url, fileName, success, error) {
 
         try {
 
@@ -11,7 +11,7 @@ var CustomFileDownloader = {
                 error,
                 'CustomFileDownloader',
                 'download',
-                [url]
+                [url, fileName]
             );
 
         } catch (e) {
