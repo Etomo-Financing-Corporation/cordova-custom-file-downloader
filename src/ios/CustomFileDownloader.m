@@ -19,7 +19,7 @@
 
         CDVPluginResult *result =
             [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                              messageAs:@"Invalid URL"];
+                              messageAsString:@"Invalid URL"];
 
         [self.commandDelegate sendPluginResult:result
                                     callbackId:command.callbackId];
@@ -32,7 +32,7 @@
 
         CDVPluginResult *result =
             [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                              messageAs:@"Invalid URL"];
+                              messageAsString:@"Invalid URL"];
 
         [self.commandDelegate sendPluginResult:result
                                     callbackId:command.callbackId];
@@ -50,7 +50,7 @@
 
             CDVPluginResult *result =
                 [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                  messageAs:error.localizedDescription];
+                                  messageAsString:error.localizedDescription];
 
             [self.commandDelegate sendPluginResult:result
                                         callbackId:command.callbackId];
@@ -61,7 +61,7 @@
 
             CDVPluginResult *result =
                 [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                  messageAs:@"Downloaded file location is unavailable"];
+                                  messageAsString:@"Downloaded file location is unavailable"];
 
             [self.commandDelegate sendPluginResult:result
                                         callbackId:command.callbackId];
@@ -92,7 +92,7 @@
 
                 CDVPluginResult *result =
                     [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                      messageAs:fileError.localizedDescription];
+                                      messageAsString:fileError.localizedDescription];
 
                 [self.commandDelegate sendPluginResult:result
                                             callbackId:command.callbackId];
@@ -108,7 +108,7 @@
 
             CDVPluginResult *result =
                 [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                  messageAs:fileError.localizedDescription];
+                                  messageAsString:fileError.localizedDescription];
 
             [self.commandDelegate sendPluginResult:result
                                         callbackId:command.callbackId];
@@ -117,7 +117,7 @@
 
         CDVPluginResult *result =
             [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-                              messageAs:destinationURL.absoluteString];
+                              messageAsString:destinationURL.absoluteString];
 
         [self.commandDelegate sendPluginResult:result
                                     callbackId:command.callbackId];
