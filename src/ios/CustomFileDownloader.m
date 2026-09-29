@@ -78,122 +78,13 @@
             fileName = @"download.pdf";
         }
 
+        if (![fileName.pathExtension.lowercaseString isEqualToString:@"pdf"]) {
+            fileName = [fileName stringByAppendingPathExtension:@"pdf"];
+        }
+
         NSURL *destinationURL =
             [documentsDirectory URLByAppendingPathComponent:fileName];
 
         NSError *fileError = nil;
 
-        if ([fileManager fileExistsAtPath:destinationURL.path]) {
-
-            [fileManager removeItemAtURL:destinationURL
-                                    error:&fileError];
-
-            if (fileError) {
-                CDVPluginResult *result =
-                    [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                      messageAsString:fileError.localizedDescription];
-
-                [self.commandDelegate sendPluginResult:result
-                                            callbackId:command.callbackId];
-                return;
-            }
-        }
-
-        [fileManager moveItemAtURL:location
-                             toURL:destinationURL
-                             error:&fileError];
-
-        if (fileError) {
-            CDVPluginResult *result =
-                [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                  messageAsString:fileError.localizedDescription];
-
-            [self.commandDelegate sendPluginResult:result
-                                        callbackId:command.callbackId];
-            return;
-        }
-
-        CDVPluginResult *result =
-            [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-                              messageAsString:destinationURL.path];
-
-        [self.commandDelegate sendPluginResult:result
-                                    callbackId:command.callbackId];
-    }];
-
-    [task resume];
-}
-
-- (void)open:(CDVInvokedUrlCommand *)command
-{
-    NSString *filePath = [command.arguments firstObject];
-
-    if (![filePath isKindOfClass:[NSString class]] || filePath.length == 0) {
-        CDVPluginResult *result =
-            [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                              messageAsString:@"Invalid file path"];
-
-        [self.commandDelegate sendPluginResult:result
-                                    callbackId:command.callbackId];
-        return;
-    }
-
-    NSURL *fileURL = [NSURL fileURLWithPath:filePath];
-
-    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
-        CDVPluginResult *result =
-            [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                              messageAsString:@"File does not exist"];
-
-        [self.commandDelegate sendPluginResult:result
-                                    callbackId:command.callbackId];
-        return;
-    }
-
-    dispatch_async(dispatch_get_main_queue(), ^{
-        UIViewController *rootViewController =
-            [UIApplication sharedApplication].keyWindow.rootViewController;
-
-        if (!rootViewController) {
-            CDVPluginResult *result =
-                [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                  messageAsString:@"Unable to find root view controller"];
-
-            [self.commandDelegate sendPluginResult:result
-                                        callbackId:command.callbackId];
-            return;
-        }
-
-        self.documentController =
-    [UIDocumentInteractionController interactionControllerWithURL:fileURL];
-
-self.documentController.delegate = self;
-
-BOOL opened =
-    [self.documentController presentPreviewAnimated:YES];
-
-        if (!opened) {
-            CDVPluginResult *result =
-                [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                  messageAsString:@"Unable to open PDF"];
-
-            [self.commandDelegate sendPluginResult:result
-                                        callbackId:command.callbackId];
-            return;
-        }
-
-        CDVPluginResult *result =
-            [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-                              messageAsString:@"PDF opened"];
-
-        [self.commandDelegate sendPluginResult:result
-                                    callbackId:command.callbackId];
-    });
-}
-
-- (UIViewController *)documentInteractionControllerViewControllerForPreview:(UIDocumentInteractionController *)controller
-{
-    return [UIApplication sharedApplication].keyWindow.rootViewController;
-}
-
-@end
+        if ([fileManager fileExists]()
