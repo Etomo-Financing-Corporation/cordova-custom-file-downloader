@@ -11,6 +11,8 @@
 
 - (void)download:(CDVInvokedUrlCommand *)command
 {
+    NSLog(@"CustomFileDownloader: download method was called");
+    
     NSString *urlString = [command.arguments firstObject];
 
     if (![urlString isKindOfClass:[NSString class]] || urlString.length == 0) {
