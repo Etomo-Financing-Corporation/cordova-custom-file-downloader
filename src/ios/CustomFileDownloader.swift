@@ -1,7 +1,6 @@
 
 import Foundation
 import UIKit
-import Cordova
 
 @objc(CustomFileDownloader)
 class CustomFileDownloader: CDVPlugin {
