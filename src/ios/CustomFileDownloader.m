@@ -1,6 +1,9 @@
-
 #import "CustomFileDownloader.h"
 #import <UIKit/UIKit.h>
+#import <QuickLook/QuickLook.h>
+
+@interface CustomFileDownloader () <QLPreviewControllerDataSource>
+@end
 
 @implementation CustomFileDownloader
 
@@ -111,7 +114,7 @@
         if (fileError) {
             CDVPluginResult *result =
                 [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                  messageAsString:fileError.localizedDescription];
+                                      messageAsString:fileError.localizedDescription];
 
             [self.commandDelegate sendPluginResult:result
                                         callbackId:command.callbackId];
@@ -155,41 +158,54 @@
         return;
     }
 
-    NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+    self.previewFileURL = [NSURL fileURLWithPath:filePath];
 
     dispatch_async(dispatch_get_main_queue(), ^{
 
-        self.documentController =
-            [UIDocumentInteractionController interactionControllerWithURL:fileURL];
+        QLPreviewController *previewController =
+            [[QLPreviewController alloc] init];
 
-        self.documentController.delegate = self;
+        previewController.dataSource = self;
 
-        BOOL opened =
-            [self.documentController presentPreviewAnimated:YES];
+        UIViewController *presentingViewController = self.viewController;
 
-        if (!opened) {
+        if (!presentingViewController) {
             CDVPluginResult *result =
                 [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
-                                  messageAsString:@"Unable to open PDF"];
+                                  messageAsString:@"Unable to find the app view controller"];
 
             [self.commandDelegate sendPluginResult:result
                                         callbackId:command.callbackId];
             return;
         }
 
-        CDVPluginResult *result =
-            [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-                              messageAsString:@"PDF opened"];
+        [presentingViewController presentViewController:previewController
+                                               animated:YES
+                                             completion:^{
 
-        [self.commandDelegate sendPluginResult:result
-                                    callbackId:command.callbackId];
+            CDVPluginResult *result =
+                [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                                  messageAsString:@"PDF opened"];
+
+            [self.commandDelegate sendPluginResult:result
+                                        callbackId:command.callbackId];
+        }];
     });
 }
 
-- (UIViewController *)documentInteractionControllerViewControllerForPreview:
-    (UIDocumentInteractionController *)controller
+#pragma mark - QLPreviewControllerDataSource
+
+- (NSInteger)numberOfPreviewItemsInPreviewController:
+    (QLPreviewController *)controller
 {
-    return [UIApplication sharedApplication].keyWindow.rootViewController;
+    return self.previewFileURL ? 1 : 0;
+}
+
+- (id<QLPreviewItem>)previewController:
+    (QLPreviewController *)controller
+    previewItemAtIndex:(NSInteger)index
+{
+    return self.previewFileURL;
 }
 
 @end
