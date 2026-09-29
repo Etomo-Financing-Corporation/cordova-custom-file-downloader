@@ -8,8 +8,6 @@
 
 @implementation CustomFileDownloader
 
-CDV_EXPORT_METHOD(download:)
-
 - (void)download:(CDVInvokedUrlCommand *)command
 {
     CDVPluginResult *result =
