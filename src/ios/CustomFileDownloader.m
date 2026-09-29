@@ -4,8 +4,6 @@
 
 @interface CustomFileDownloader : CDVPlugin
 
-- (void)download:(CDVInvokedUrlCommand *)command;
-
 @end
 
 @implementation CustomFileDownloader
@@ -72,6 +70,17 @@
         NSURL *documentsDirectory =
             [fileManager URLsForDirectory:NSDocumentDirectory
                                 inDomains:NSUserDomainMask].firstObject;
+
+        if (!documentsDirectory) {
+
+            CDVPluginResult *result =
+                [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
+                                  messageAsString:@"Documents directory is unavailable"];
+
+            [self.commandDelegate sendPluginResult:result
+                                        callbackId:command.callbackId];
+            return;
+        }
 
         NSString *fileName = response.suggestedFilename;
 
