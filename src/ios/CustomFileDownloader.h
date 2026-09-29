@@ -10,4 +10,3 @@
 - (void)open:(CDVInvokedUrlCommand *)command;
 
 @end
-```
