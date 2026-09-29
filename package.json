@@ -1,0 +1,14 @@
+{
+  "name": "cordova-custom-file-downloader",
+  "version": "1.0.0",
+  "description": "Custom PDF file downloader for OutSystems Developer Cloud",
+  "cordova": {
+    "id": "cordova-custom-file-downloader",
+    "name": "CustomFileDownloader"
+  },
+  "keywords": [
+    "cordova",
+    "cordova-plugin"
+  ],
+  "license": "MIT"
+}
