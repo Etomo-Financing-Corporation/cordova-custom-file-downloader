@@ -1,4 +1,5 @@
 #import "CustomFileDownloader.h"
+#import <UIKit/UIKit.h>
 
 @implementation CustomFileDownloader
 
@@ -129,12 +130,65 @@
 
 - (void)open:(CDVInvokedUrlCommand *)command
 {
-    CDVPluginResult *result =
-        [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
-                          messageAsString:@"OPEN NATIVE METHOD REACHED"];
+    NSString *filePath = [command.arguments firstObject];
 
-    [self.commandDelegate sendPluginResult:result
-                                callbackId:command.callbackId];
+    if (![filePath isKindOfClass:[NSString class]] || filePath.length == 0) {
+        CDVPluginResult *result =
+            [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
+                              messageAsString:@"Invalid file path"];
+
+        [self.commandDelegate sendPluginResult:result
+                                    callbackId:command.callbackId];
+        return;
+    }
+
+    if (![[NSFileManager defaultManager] fileExistsAtPath:filePath]) {
+        CDVPluginResult *result =
+            [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
+                              messageAsString:@"PDF file does not exist"];
+
+        [self.commandDelegate sendPluginResult:result
+                                    callbackId:command.callbackId];
+        return;
+    }
+
+    NSURL *fileURL = [NSURL fileURLWithPath:filePath];
+
+    dispatch_async(dispatch_get_main_queue(), ^{
+
+        self.documentController =
+            [UIDocumentInteractionController interactionControllerWithURL:fileURL];
+
+        self.documentController.delegate = self;
+
+        BOOL opened =
+            [self.documentController presentPreviewAnimated:YES];
+
+        if (!opened) {
+
+            CDVPluginResult *result =
+                [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR
+                                  messageAsString:@"Unable to open PDF viewer"];
+
+            [self.commandDelegate sendPluginResult:result
+                                        callbackId:command.callbackId];
+
+            return;
+        }
+
+        CDVPluginResult *result =
+            [CDVPluginResult resultWithStatus:CDVCommandStatus_OK
+                              messageAsString:@"PDF viewer opened"];
+
+        [self.commandDelegate sendPluginResult:result
+                                    callbackId:command.callbackId];
+    });
+}
+
+- (UIViewController *)documentInteractionControllerViewControllerForPreview:
+    (UIDocumentInteractionController *)controller
+{
+    return self.viewController;
 }
 
 @end
