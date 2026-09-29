@@ -1,6 +1,9 @@
 #import "CustomFileDownloader.h"
 #import <UIKit/UIKit.h>
 
+@interface CustomFileDownloader () <UIDocumentInteractionControllerDelegate>
+@end
+
 @implementation CustomFileDownloader
 
 - (void)download:(CDVInvokedUrlCommand *)command
@@ -20,7 +23,6 @@
 
     if (![customFileName isKindOfClass:[NSString class]] ||
         customFileName.length == 0) {
-
         customFileName = @"download.pdf";
     }
 
@@ -79,13 +81,15 @@
             return;
         }
 
-        if (![customFileName.pathExtension.lowercaseString isEqualToString:@"pdf"]) {
-            customFileName =
-                [customFileName stringByAppendingPathExtension:@"pdf"];
+        NSString *finalFileName = customFileName;
+
+        if (![finalFileName.pathExtension.lowercaseString isEqualToString:@"pdf"]) {
+            finalFileName =
+                [finalFileName stringByAppendingPathExtension:@"pdf"];
         }
 
         NSURL *destinationURL =
-            [documentsDirectory URLByAppendingPathComponent:customFileName];
+            [documentsDirectory URLByAppendingPathComponent:finalFileName];
 
         NSError *fileError = nil;
 
