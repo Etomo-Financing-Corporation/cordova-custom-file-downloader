@@ -1,5 +1,4 @@
 #import "CustomFileDownloader.h"
-#import <UIKit/UIKit.h>
 
 @implementation CustomFileDownloader
 
@@ -139,12 +138,3 @@
 }
 
 @end
-```
-
-Build this exact version.
-
-**Don't change the JavaScript.** If the build succeeds, run the test again. We specifically want to see whether the third alert becomes:
-
-`OPEN SUCCESS — OPEN NATIVE METHOD REACHED`
-
-That will tell us whether `open()` itself is being dispatched.
