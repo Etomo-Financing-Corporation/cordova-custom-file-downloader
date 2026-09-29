@@ -1,12 +1,20 @@
-
 var exec = require('cordova/exec');
 
 var CustomFileDownloader = {
 
     download: function (url, success, error) {
+
         exec(
-            success,
-            error,
+            function (filePath) {
+                if (success) {
+                    success(filePath);
+                }
+            },
+            function (errorMessage) {
+                if (error) {
+                    error(errorMessage);
+                }
+            },
             'CustomFileDownloader',
             'download',
             [url]
