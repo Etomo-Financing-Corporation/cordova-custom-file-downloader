@@ -1,12 +1,4 @@
-#import <Foundation/Foundation.h>
-#import <UIKit/UIKit.h>
-#import <Cordova/Cordova.h>
-
-@interface CustomFileDownloader : CDVPlugin
-
-- (void)download:(CDVInvokedUrlCommand *)command;
-
-@end
+#import "CustomFileDownloader.h"
 
 @implementation CustomFileDownloader
 
